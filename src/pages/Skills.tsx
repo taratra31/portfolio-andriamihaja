@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Brain, Code2, Database, Globe, Layout, Network, Settings, Sparkles } from 'lucide-react'
+import { Brain, Code2, Database, Globe, Layout, Network, Settings } from 'lucide-react'
 
 const skillCategories = [
   {
@@ -134,7 +134,7 @@ export function Skills({ lang }: SkillsProps) {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {skillCategories.map((category, index) => (
+          {skillCategories.map((category, _index) => (
             <Card key={category.title.en} className="group relative overflow-hidden border border-indigo-400/20 bg-slate-800/50 backdrop-blur-sm shadow-xl transition-all duration-300 hover:shadow-2xl hover:shadow-indigo-500/10 hover:-translate-y-1">
               <div className="absolute left-0 top-0 h-full w-1 bg-gradient-to-b from-indigo-500 to-purple-500" />
               <CardHeader className="pb-2">
