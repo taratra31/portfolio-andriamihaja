@@ -7,7 +7,6 @@ import {
   Code2, 
   Trophy,
   Sparkles,
-  BookOpen,
   Zap,
   Globe,
   School,

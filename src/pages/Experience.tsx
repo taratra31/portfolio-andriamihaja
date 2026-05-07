@@ -14,8 +14,7 @@ import {
   Container,
   Smartphone,
   Code2,
-  Globe,
-  ArrowUpRight
+  Globe
 } from 'lucide-react'
 
 const technologyIcons: Record<string, React.ReactNode> = {
