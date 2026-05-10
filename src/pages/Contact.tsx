@@ -10,19 +10,16 @@ import {
   Phone, 
   MapPin, 
   Send, 
-  Sparkles, 
   Clock, 
   Briefcase, 
   CheckCircle2,
-  ArrowUpRight,
   User,
-  Heart,
-  Code2,
   Zap
 } from 'lucide-react'
 
 type ContactProps = {
   lang: 'fr' | 'en'
+  theme?: 'light' | 'dark'
 }
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
@@ -34,9 +31,10 @@ const CONTACT_LOCATION = import.meta.env.VITE_CONTACT_LOCATION || 'Antananarivo,
 const GITHUB_URL = import.meta.env.VITE_GITHUB_URL || 'https://github.com/taratra31'
 const LINKEDIN_URL = import.meta.env.VITE_LINKEDIN_URL || 'https://linkedin.com/in/taratra-andriam'
 
-export function Contact({ lang }: ContactProps) {
+export function Contact({ lang, theme = 'light' }: ContactProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle')
+  const isDark = theme === 'dark'
 
   const t = {
     fr: {
@@ -60,8 +58,12 @@ export function Contact({ lang }: ContactProps) {
       servicesItems: ['Full Stack', 'Mobile (Ionic)', 'API Backend', 'Dashboard Admin', 'IA/Vision'],
       response: 'Réponse garantie sous 24h',
       copyright: 'Tous droits réservés',
-      madeWith: 'Fait avec',
-      by: 'par',
+      emailLabel: 'Email',
+      phoneLabel: 'Téléphone',
+      locationLabel: 'Localisation',
+      namePlaceholder: 'votre nom...',
+      emailPlaceholder: 'votre addresse email...',
+      messagePlaceholder: 'Décrivez votre projet, vos besoins...',
     },
     en: {
       section: 'Contact',
@@ -84,8 +86,12 @@ export function Contact({ lang }: ContactProps) {
       servicesItems: ['Full Stack', 'Mobile (Ionic)', 'API Backend', 'Admin Dashboard', 'AI/Vision'],
       response: 'Guaranteed reply within 24h',
       copyright: 'All rights reserved',
-      madeWith: 'Made with',
-      by: 'by',
+      emailLabel: 'Email',
+      phoneLabel: 'Phone',
+      locationLabel: 'Location',
+      namePlaceholder: 'Your name...',
+      emailPlaceholder: 'Your email address...',
+      messagePlaceholder: 'Describe your project, your needs...',
     },
   } as const
 
@@ -127,9 +133,7 @@ export function Contact({ lang }: ContactProps) {
         },
       })
 
-      if (!response.ok) {
-        throw new Error('Request failed')
-      }
+      if (!response.ok) throw new Error('Request failed')
 
       form.reset()
       setStatus('success')
@@ -144,92 +148,89 @@ export function Contact({ lang }: ContactProps) {
     }
   }
 
+  // Classes du thème
+  const bgClass = "bg-white dark:bg-gray-950"
+  const textPrimary = "text-gray-900 dark:text-gray-100"
+  const textSecondary = "text-gray-600 dark:text-gray-300"
+  const textTertiary = "text-gray-400 dark:text-gray-500"
+  const borderClass = "border border-gray-200 dark:border-gray-800"
+  const subtleBg = "bg-gray-50 dark:bg-gray-900/50"
+  const accent = "text-emerald-600 dark:text-emerald-400"
+  const accentBg = "bg-emerald-50 dark:bg-emerald-900/20"
+  const accentBorder = "border-emerald-200 dark:border-emerald-800"
+  const cardBg = "bg-white dark:bg-gray-900"
+  const cardBorder = "border-gray-200 dark:border-gray-800"
+  const cardHover = "hover:border-emerald-200 dark:hover:border-emerald-800 hover:shadow-xl hover:shadow-emerald-500/5"
+  const inputClass = `w-full rounded-xl border-2 ${borderClass} ${subtleBg} px-4 py-3 text-sm ${textPrimary} placeholder:${textTertiary} focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:border-emerald-400 dark:focus:border-emerald-600 transition-all duration-300`
+
   return (
-    <section id="contact" className="relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8" style={{
-      background: "linear-gradient(135deg, #0b0f19 0%, #131127 30%, #1a1030 60%, #0b0f19 100%)"
-    }}>
-      {/* Enhanced Animated background effects */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-20 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-indigo-600/20 via-purple-600/20 to-rose-600/20 blur-3xl animate-pulse"></div>
-        <div className="absolute -bottom-40 -left-20 h-[600px] w-[600px] rounded-full bg-gradient-to-br from-cyan-600/20 via-blue-600/20 to-emerald-600/20 blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[700px] w-[700px] rounded-full bg-gradient-to-br from-indigo-500/10 via-purple-500/10 to-rose-500/10 blur-3xl"></div>
-        
-        {/* Particles subtiles */}
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-1/4 left-1/4 h-1 w-1 rounded-full bg-cyan-400 animate-pulse"></div>
-          <div className="absolute top-1/3 right-1/4 h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse delay-300"></div>
-          <div className="absolute bottom-1/4 left-1/3 h-1 w-1 rounded-full bg-rose-400 animate-pulse delay-700"></div>
-          <div className="absolute top-2/3 right-1/3 h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse delay-500"></div>
-          <div className="absolute top-1/5 right-1/5 h-1 w-1 rounded-full bg-amber-400 animate-pulse delay-200"></div>
-        </div>
-        
-        {/* Grid pattern amélioré */}
+    <section id="contact" className={`relative overflow-hidden px-4 py-24 sm:px-6 lg:px-8 ${bgClass} transition-colors duration-300`}>
+      
+      {/* Fond subtil */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-96 h-96 rounded-full bg-emerald-400/5 blur-3xl" />
+        <div className="absolute -bottom-40 -left-40 w-96 h-96 rounded-full bg-emerald-600/5 blur-3xl" />
         <div 
-          className="absolute inset-0 opacity-[0.15]"
+          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='grid' width='80' height='80' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 80 0 L 0 0 0 80' fill='none' stroke='url(%23gradient)' stroke-width='0.8'/%3E%3C/pattern%3E%3ClinearGradient id='gradient' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='rgba(99,102,241,0.3)'/%3E%3Cstop offset='100%25' stop-color='rgba(236,72,153,0.3)'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23grid)'/%3E%3C/svg%3E")`,
-            backgroundRepeat: 'repeat'
+            backgroundImage: `radial-gradient(circle, #10b981 1px, transparent 1px)`,
+            backgroundSize: '40px 40px'
           }}
         />
       </div>
 
       <div className="relative max-w-6xl mx-auto z-10">
-        {/* Header - Style amélioré */}
+        {/* Header */}
         <div className="mb-16 text-center">
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-indigo-500/40 bg-gradient-to-r from-indigo-950/80 to-purple-950/80 backdrop-blur-md px-5 py-2.5 shadow-lg shadow-indigo-500/10 mb-6">
-            <Sparkles className="h-4 w-4 text-indigo-400 animate-pulse" />
-            <span className="text-sm font-semibold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent uppercase tracking-[0.2em]">
+          <div className={`inline-flex items-center gap-2 rounded-full border-2 ${accentBorder} ${accentBg} px-4 py-2 mb-6`}>
+            <Mail className={`h-4 w-4 ${accent}`} />
+            <span className={`text-xs font-bold uppercase tracking-[0.3em] ${accent}`}>
               {t[lang].section}
             </span>
           </div>
           
-          <h2 className="mb-4 font-extrabold text-4xl leading-tight text-white sm:text-5xl">
-            <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
-              {t[lang].title}
-            </span>
+          <h2 className={`mb-4 text-4xl sm:text-5xl font-black tracking-tight ${textPrimary}`}>
+            {t[lang].title}
           </h2>
-          <p className="mx-auto max-w-2xl text-slate-400/90 text-base font-light">
+          <p className={`mx-auto max-w-2xl text-base ${textSecondary} font-light`}>
             {t[lang].subtitle}
           </p>
         </div>
 
         <div className="grid md:grid-cols-5 gap-8">
-          {/* Left Card - Contact Info (2 colonnes sur 5) */}
-          <Card className="group/card md:col-span-2 relative overflow-hidden rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-md shadow-xl transition-all duration-500 hover:border-indigo-500/50 hover:from-slate-800/90 hover:to-indigo-950/80 hover:scale-[1.01] hover:shadow-2xl hover:shadow-indigo-500/10">
-            {/* Effet de brillance */}
-            <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 via-transparent to-purple-500/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+          {/* Left Card - Contact Info */}
+          <Card className={`group/card md:col-span-2 relative overflow-hidden rounded-2xl border-2 ${cardBorder} ${cardBg} transition-all duration-300 ${cardHover}`}>
+            {/* Barre supérieure */}
+            <div className="absolute left-0 top-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-60 group-hover/card:opacity-100 transition-all duration-300 group-hover/card:h-2" />
             
-            {/* Barre latérale */}
-            <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-indigo-500 to-purple-500 rounded-l-2xl opacity-60 group-hover/card:opacity-100 transition-all duration-500 group-hover/card:w-2" />
-            
-            <CardHeader className="pb-3 relative">
+            <CardHeader className="pb-3 pt-5">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-500/20">
-                  <User className="h-5 w-5 text-indigo-300" />
+                <div className={`p-2 rounded-xl ${accentBg} border-2 ${accentBorder}`}>
+                  <User className={`h-5 w-5 ${accent}`} />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-bold text-white group-hover/card:text-indigo-200 transition-colors duration-300">
+                  <CardTitle className={`text-xl font-bold ${textPrimary}`}>
                     {t[lang].infoTitle}
                   </CardTitle>
-                  <CardDescription className="text-slate-400 text-xs mt-0.5">
+                  <CardDescription className={`text-xs mt-0.5 ${textTertiary}`}>
                     {t[lang].infoDesc}
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             
-            <CardContent className="space-y-6 relative">
+            <CardContent className="space-y-6">
               {/* Availability */}
               <div>
-                <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-indigo-400/80">
-                  <Clock className="h-3.5 w-3.5" />
+                <p className={`mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] ${textTertiary}`}>
+                  <Clock className={`h-3.5 w-3.5 ${accent}`} />
                   {t[lang].availability}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {t[lang].availabilityItems.map((item, i) => (
                     <Badge 
                       key={i} 
-                      className="rounded-xl border border-indigo-500/30 bg-gradient-to-r from-indigo-950/50 to-purple-950/50 backdrop-blur-sm text-indigo-300 text-xs py-1 px-3 font-medium transition-all duration-300 hover:scale-105"
+                      className={`rounded-lg border-2 ${borderClass} ${subtleBg} text-xs py-1 px-3 font-medium transition-all duration-300 hover:border-emerald-200 dark:hover:border-emerald-800 hover:scale-105 ${textSecondary}`}
                     >
                       {item}
                     </Badge>
@@ -239,15 +240,15 @@ export function Contact({ lang }: ContactProps) {
 
               {/* Services */}
               <div>
-                <p className="mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-purple-400/80">
-                  <Briefcase className="h-3.5 w-3.5" />
+                <p className={`mb-3 flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] ${textTertiary}`}>
+                  <Briefcase className={`h-3.5 w-3.5 ${accent}`} />
                   {t[lang].services}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {t[lang].servicesItems.map((item, i) => (
                     <Badge 
                       key={i} 
-                      className="rounded-xl border border-purple-500/30 bg-gradient-to-r from-purple-950/50 to-indigo-950/50 backdrop-blur-sm text-purple-300 text-xs py-1 px-3 font-medium transition-all duration-300 hover:scale-105"
+                      className={`rounded-lg border-2 ${accentBorder} ${accentBg} ${accent} text-xs py-1 px-3 font-medium transition-all duration-300 hover:scale-105`}
                     >
                       {item}
                     </Badge>
@@ -257,45 +258,40 @@ export function Contact({ lang }: ContactProps) {
 
               {/* Contact Details */}
               <div className="space-y-3 pt-2">
-                <div className="group/item flex items-center gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-indigo-500/5 hover:border hover:border-indigo-500/20">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-600/20 border border-indigo-500/20 group-hover/item:from-indigo-500/30 group-hover/item:to-indigo-600/30 transition-all duration-300">
-                    <Mail className="h-4 w-4 text-indigo-400 group-hover/item:text-indigo-300 transition-colors" />
+                {/* Email */}
+                <div className={`group/item flex items-center gap-3 rounded-xl p-3 transition-all duration-300 hover:${accentBg} hover:border-2 hover:${accentBorder}`}>
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${accentBg} border-2 ${accentBorder} transition-all duration-300 group-hover/item:scale-110`}>
+                    <Mail className={`h-4 w-4 ${accent}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-0.5">Email</p>
-                    <a 
-                      href={`mailto:${CONTACT_EMAIL}`} 
-                      className="text-slate-300 text-sm transition-colors hover:text-indigo-400 truncate block"
-                    >
+                    <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-0.5">{t[lang].emailLabel}</p>
+                    <a href={`mailto:${CONTACT_EMAIL}`} className={`text-sm font-medium truncate block ${textSecondary} hover:${accent} transition-colors`}>
                       {CONTACT_EMAIL}
                     </a>
                   </div>
-                  <ArrowUpRight className="h-3 w-3 text-slate-600 group-hover/item:text-indigo-400 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-all duration-300 opacity-0 group-hover/item:opacity-100" />
                 </div>
                 
-                <div className="group/item flex items-center gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-purple-500/5 hover:border hover:border-purple-500/20">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500/20 to-purple-600/20 border border-purple-500/20 group-hover/item:from-purple-500/30 group-hover/item:to-purple-600/30 transition-all duration-300">
-                    <Phone className="h-4 w-4 text-purple-400 group-hover/item:text-purple-300 transition-colors" />
+                {/* Phone */}
+                <div className={`group/item flex items-center gap-3 rounded-xl p-3 transition-all duration-300 hover:${accentBg} hover:border-2 hover:${accentBorder}`}>
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${accentBg} border-2 ${accentBorder} transition-all duration-300 group-hover/item:scale-110`}>
+                    <Phone className={`h-4 w-4 ${accent}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-0.5">Téléphone</p>
-                    <a 
-                      href={`tel:${CONTACT_PHONE_LINK}`} 
-                      className="text-slate-300 text-sm transition-colors hover:text-purple-400"
-                    >
+                    <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-0.5">{t[lang].phoneLabel}</p>
+                    <a href={`tel:${CONTACT_PHONE_LINK}`} className={`text-sm font-mono ${textSecondary} hover:${accent} transition-colors`}>
                       {CONTACT_PHONE_DISPLAY}
                     </a>
                   </div>
-                  <ArrowUpRight className="h-3 w-3 text-slate-600 group-hover/item:text-purple-400 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-all duration-300 opacity-0 group-hover/item:opacity-100" />
                 </div>
                 
-                <div className="group/item flex items-center gap-3 rounded-xl p-2.5 transition-all duration-300 hover:bg-cyan-500/5 hover:border hover:border-cyan-500/20">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 border border-cyan-500/20 group-hover/item:from-cyan-500/30 group-hover/item:to-cyan-600/30 transition-all duration-300">
-                    <MapPin className="h-4 w-4 text-cyan-400 group-hover/item:text-cyan-300 transition-colors" />
+                {/* Location */}
+                <div className={`group/item flex items-center gap-3 rounded-xl p-3 transition-all duration-300 hover:${accentBg} hover:border-2 hover:${accentBorder}`}>
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl ${accentBg} border-2 ${accentBorder} transition-all duration-300 group-hover/item:scale-110`}>
+                    <MapPin className={`h-4 w-4 ${accent}`} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-[10px] uppercase tracking-wider text-slate-500 mb-0.5">Localisation</p>
-                    <span className="text-slate-300 text-sm">{CONTACT_LOCATION}</span>
+                    <p className="text-[10px] uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-0.5">{t[lang].locationLabel}</p>
+                    <span className={`text-sm ${textSecondary}`}>{CONTACT_LOCATION}</span>
                   </div>
                 </div>
               </div>
@@ -306,107 +302,99 @@ export function Contact({ lang }: ContactProps) {
                   href={GITHUB_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/btn relative overflow-hidden flex items-center justify-center gap-2 rounded-xl border border-indigo-500/30 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-md px-4 py-3 transition-all duration-500 hover:border-indigo-400/60 hover:from-indigo-950/80 hover:to-purple-950/80 hover:scale-105 hover:shadow-lg hover:shadow-indigo-500/10"
+                  className={`group/btn flex items-center justify-center gap-2 rounded-xl border-2 ${borderClass} ${subtleBg} px-4 py-3 transition-all duration-300 hover:border-emerald-200 dark:hover:border-emerald-800 hover:scale-105 hover:shadow-md`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500/10 to-purple-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
-                  <Globe className="relative h-4 w-4 text-slate-300 group-hover/btn:text-indigo-400 transition-colors duration-300" />
-                  <span className="relative text-sm font-semibold text-slate-300 group-hover/btn:text-white transition-colors">GitHub</span>
-                  <ArrowUpRight className="relative h-3 w-3 text-slate-500 group-hover/btn:text-indigo-400 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-300" />
+                  <Globe className={`h-4 w-4 ${accent} transition-transform duration-300 group-hover/btn:scale-110`} />
+                  <span className={`text-sm font-semibold ${textSecondary} group-hover/btn:${accent} transition-colors`}>GitHub</span>
                 </a>
                 
                 <a
                   href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/btn relative overflow-hidden flex items-center justify-center gap-2 rounded-xl border border-purple-500/30 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-md px-4 py-3 transition-all duration-500 hover:border-purple-400/60 hover:from-purple-950/80 hover:to-indigo-950/80 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/10"
+                  className={`group/btn flex items-center justify-center gap-2 rounded-xl border-2 ${borderClass} ${subtleBg} px-4 py-3 transition-all duration-300 hover:border-emerald-200 dark:hover:border-emerald-800 hover:scale-105 hover:shadow-md`}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-500/10 to-indigo-500/10 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"></div>
-                  <Link className="relative h-4 w-4 text-slate-300 group-hover/btn:text-purple-400 transition-colors duration-300" />
-                  <span className="relative text-sm font-semibold text-slate-300 group-hover/btn:text-white transition-colors">LinkedIn</span>
-                  <ArrowUpRight className="relative h-3 w-3 text-slate-500 group-hover/btn:text-purple-400 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-all duration-300" />
+                  <Link className={`h-4 w-4 ${accent} transition-transform duration-300 group-hover/btn:scale-110`} />
+                  <span className={`text-sm font-semibold ${textSecondary} group-hover/btn:${accent} transition-colors`}>LinkedIn</span>
                 </a>
               </div>
 
               {/* Response Guarantee */}
-              <div className="flex items-center justify-center gap-2 rounded-xl border border-emerald-500/20 bg-gradient-to-r from-emerald-950/30 to-teal-950/30 backdrop-blur-sm py-2.5 px-4">
-                <CheckCircle2 className="h-4 w-4 text-emerald-400" />
-                <span className="text-xs font-medium text-emerald-300">{t[lang].response}</span>
+              <div className={`flex items-center justify-center gap-2 rounded-xl border-2 ${accentBorder} ${accentBg} py-3 px-4`}>
+                <CheckCircle2 className={`h-4 w-4 ${accent}`} />
+                <span className={`text-xs font-bold ${accent}`}>{t[lang].response}</span>
               </div>
             </CardContent>
           </Card>
 
-          {/* Right Card - Contact Form (3 colonnes sur 5) */}
-          <Card className="group/card md:col-span-3 relative overflow-hidden rounded-2xl border border-indigo-500/20 bg-gradient-to-br from-slate-900/80 to-slate-800/80 backdrop-blur-md shadow-xl transition-all duration-500 hover:border-indigo-500/50 hover:from-slate-800/90 hover:to-indigo-950/80 hover:scale-[1.01] hover:shadow-2xl hover:shadow-indigo-500/10">
-            {/* Effet de brillance */}
-            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 via-transparent to-indigo-500/5 opacity-0 group-hover/card:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
+          {/* Right Card - Contact Form */}
+          <Card className={`group/card md:col-span-3 relative overflow-hidden rounded-2xl border-2 ${cardBorder} ${cardBg} transition-all duration-300 ${cardHover}`}>
+            {/* Barre supérieure */}
+            <div className="absolute left-0 top-0 right-0 h-1.5 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-60 group-hover/card:opacity-100 transition-all duration-300 group-hover/card:h-2" />
             
-            {/* Barre latérale */}
-            <div className="absolute left-0 top-0 h-full w-1.5 bg-gradient-to-b from-purple-500 to-indigo-500 rounded-l-2xl opacity-60 group-hover/card:opacity-100 transition-all duration-500 group-hover/card:w-2" />
-            
-            <CardHeader className="pb-3 relative">
+            <CardHeader className="pb-3 pt-5">
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/20">
-                  <Send className="h-5 w-5 text-purple-300" />
+                <div className={`p-2 rounded-xl ${accentBg} border-2 ${accentBorder}`}>
+                  <Send className={`h-5 w-5 ${accent}`} />
                 </div>
                 <div>
-                  <CardTitle className="text-xl font-bold text-white group-hover/card:text-indigo-200 transition-colors duration-300">
+                  <CardTitle className={`text-xl font-bold ${textPrimary}`}>
                     {t[lang].formTitle}
                   </CardTitle>
-                  <CardDescription className="text-slate-400 text-xs mt-0.5">
+                  <CardDescription className={`text-xs mt-0.5 ${textTertiary}`}>
                     {t[lang].formDesc}
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             
-            <CardContent className="relative">
+            <CardContent>
               <form onSubmit={onSubmit} className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-400 ml-1">
-                    {t[lang].name} <span className="text-rose-400">*</span>
+                  <label className={`text-xs font-semibold ml-1 ${textSecondary}`}>
+                    {t[lang].name} <span className="text-emerald-500">*</span>
                   </label>
                   <input
                     type="text"
                     name="name"
-                    placeholder={lang === 'fr' ? 'Ex: Jean Dupont' : 'Ex: John Doe'}
+                    placeholder={t[lang].namePlaceholder}
                     required
-                    className="w-full rounded-xl border border-indigo-500/30 bg-slate-900/50 backdrop-blur-sm px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-300 hover:border-indigo-500/50"
+                    className={inputClass}
                   />
                 </div>
                 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-400 ml-1">
-                    {t[lang].email} <span className="text-rose-400">*</span>
+                  <label className={`text-xs font-semibold ml-1 ${textSecondary}`}>
+                    {t[lang].email} <span className="text-emerald-500">*</span>
                   </label>
                   <input
                     type="email"
                     name="email"
-                    placeholder={lang === 'fr' ? 'Ex: jean@email.com' : 'Ex: john@email.com'}
+                    placeholder={t[lang].emailPlaceholder}
                     required
-                    className="w-full rounded-xl border border-indigo-500/30 bg-slate-900/50 backdrop-blur-sm px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-300 hover:border-indigo-500/50"
+                    className={inputClass}
                   />
                 </div>
                 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-slate-400 ml-1">
-                    {t[lang].message} <span className="text-rose-400">*</span>
+                  <label className={`text-xs font-semibold ml-1 ${textSecondary}`}>
+                    {t[lang].message} <span className="text-emerald-500">*</span>
                   </label>
                   <textarea
                     name="message"
-                    placeholder={lang === 'fr' ? 'Décrivez votre projet, vos besoins...' : 'Describe your project, your needs...'}
+                    placeholder={t[lang].messagePlaceholder}
                     rows={5}
                     required
-                    className="w-full rounded-xl border border-indigo-500/30 bg-slate-900/50 backdrop-blur-sm px-4 py-3 text-sm text-white placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 focus:border-indigo-500/50 transition-all duration-300 hover:border-indigo-500/50 resize-none"
+                    className={`${inputClass} resize-none`}
                   ></textarea>
                 </div>
                 
                 <Button 
                   type="submit" 
-                  className="group/btn relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 via-purple-600 to-rose-600 py-6 text-white font-semibold shadow-xl shadow-indigo-500/25 transition-all duration-500 hover:from-indigo-500 hover:via-purple-500 hover:to-rose-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-purple-500/30 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="group/btn w-full rounded-xl bg-emerald-600 hover:bg-emerald-700 py-6 text-white font-bold uppercase tracking-wider text-sm shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/30 transition-all duration-300 hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
                   disabled={isSubmitting}
                 >
-                  <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 opacity-0 group-hover/btn:opacity-100 blur-xl transition-opacity duration-500"></span>
-                  <span className="relative flex items-center justify-center gap-2">
+                  <span className="flex items-center justify-center gap-2">
                     {isSubmitting ? (
                       <>
                         <div className="h-4 w-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
@@ -414,7 +402,7 @@ export function Contact({ lang }: ContactProps) {
                       </>
                     ) : (
                       <>
-                        <Send className="h-4 w-4 group-hover/btn:-translate-y-0.5 transition-transform duration-300" />
+                        <Send className="h-4 w-4 transition-transform duration-300 group-hover/btn:-translate-y-0.5" />
                         {t[lang].submit}
                       </>
                     )}
@@ -422,19 +410,19 @@ export function Contact({ lang }: ContactProps) {
                 </Button>
 
                 {status === 'success' && (
-                  <div className="rounded-xl border border-emerald-500/30 bg-gradient-to-r from-emerald-950/50 to-teal-950/50 backdrop-blur-sm p-4 animate-fadeIn">
+                  <div className={`rounded-xl border-2 ${accentBorder} ${accentBg} p-4`}>
                     <div className="flex items-start gap-3">
-                      <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-emerald-300">{t[lang].success}</p>
+                      <CheckCircle2 className={`h-5 w-5 ${accent} flex-shrink-0 mt-0.5`} />
+                      <p className={`text-sm font-medium ${accent}`}>{t[lang].success}</p>
                     </div>
                   </div>
                 )}
                 
                 {status === 'error' && (
-                  <div className="rounded-xl border border-rose-500/30 bg-gradient-to-r from-rose-950/50 to-red-950/50 backdrop-blur-sm p-4 animate-fadeIn">
+                  <div className="rounded-xl border-2 border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/20 p-4">
                     <div className="flex items-start gap-3">
-                      <Zap className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-rose-300">{t[lang].error}</p>
+                      <Zap className="h-5 w-5 text-red-500 flex-shrink-0 mt-0.5" />
+                      <p className="text-sm font-medium text-red-600 dark:text-red-400">{t[lang].error}</p>
                     </div>
                   </div>
                 )}
@@ -443,23 +431,16 @@ export function Contact({ lang }: ContactProps) {
           </Card>
         </div>
 
-        {/* Footer amélioré */}
-        <div className="mt-16 pt-8 border-t border-indigo-500/20">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
-            <div className="flex items-center gap-2 text-slate-500 text-sm">
+        {/* Footer */}
+        <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className={`flex items-center gap-2 text-sm ${textTertiary}`}>
               <span>© 2026</span>
-              <span className="font-semibold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              <span className={`font-bold ${accent}`}>
                 {PROFILE_NAME}
               </span>
-              <span className="hidden sm:inline">-</span>
+              <span className="hidden sm:inline text-gray-300 dark:text-gray-600">-</span>
               <span className="hidden sm:inline">{t[lang].copyright}</span>
-            </div>
-            
-            <div className="flex items-center gap-1.5 text-xs text-slate-600">
-              <span>{t[lang].madeWith}</span>
-              <Heart className="h-3 w-3 text-rose-400 animate-pulse" />
-              <span>{t[lang].by}</span>
-              <Code2 className="h-3 w-3 text-indigo-400 ml-1" />
             </div>
           </div>
         </div>
