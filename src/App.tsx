@@ -34,7 +34,7 @@ function ThemeProvider({ children }: { children: ReactNode }) {
   return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
 }
 
-const DISPLAY_NAME = 'Andriamihaja'
+//const DISPLAY_NAME = 'Andriamihaja'
 
 function AppContent() {
   const { theme, toggleTheme } = useTheme()
