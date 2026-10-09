@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, ChevronDown, Download, FolderCode, Layers, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -21,6 +21,14 @@ export function Home() {
   const glowRef = useParallax<HTMLDivElement>(-0.04)
   const exploreRef = useRef<HTMLDivElement>(null)
   const isMobile = useIsMobile()
+  const [showArrow, setShowArrow] = useState(true)
+
+  useEffect(() => {
+    const onScroll = () => setShowArrow(window.scrollY < 80)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const handleSectionClick = (to: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (!isMobile) return
@@ -195,13 +203,15 @@ export function Home() {
 
       <TechMarquee />
 
-      <button
-        onClick={() => exploreRef.current?.scrollIntoView({ behavior: 'smooth' })}
-        aria-label={t[lang].scroll}
-        className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-emerald-600 dark:text-gray-500 dark:hover:bg-gray-800/60 dark:hover:text-emerald-400"
-      >
-        <ChevronDown className="h-7 w-7 animate-bounce" />
-      </button>
+      {showArrow && (
+        <button
+          onClick={() => exploreRef.current?.scrollIntoView({ behavior: 'smooth' })}
+          aria-label={t[lang].scroll}
+          className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 rounded-full p-2 text-gray-400 transition-opacity hover:bg-gray-100 hover:text-emerald-600 dark:text-gray-500 dark:hover:bg-gray-800/60 dark:hover:text-emerald-400 md:hidden"
+        >
+          <ChevronDown className="h-7 w-7 animate-bounce" />
+        </button>
+      )}
     </div>
   )
 }
