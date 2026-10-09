@@ -77,7 +77,7 @@ export function ProjectDetails({ project, lang, variant = 'page' }: ProjectDetai
             className="absolute inset-0 h-full w-full object-cover object-top"
           />
           <div className="relative aspect-[16/10] w-full">
-            <LivePreview src={project.url} title={project.name} interactive />
+            {project.live && <LivePreview src={project.url} title={project.name} interactive />}
           </div>
         </div>,
         80,

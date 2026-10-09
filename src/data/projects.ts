@@ -17,6 +17,7 @@ export type Project = {
   technologies: string[]
   url: string
   year: string
+  live: boolean
 }
 
 export const projects: Project[] = [
@@ -43,6 +44,7 @@ export const projects: Project[] = [
     technologies: ['React', 'Node.js', 'PostgreSQL'],
     url: 'https://madazone.duckdns.org/',
     year: '2026',
+    live: false,
   },
   {
     slug: 'madastock',
@@ -67,6 +69,7 @@ export const projects: Project[] = [
     technologies: ['React', 'Node.js', 'PostgreSQL'],
     url: 'https://madastock.onrender.com/',
     year: '2026',
+    live: false,
   },
   {
     slug: 'madacolis',
@@ -91,6 +94,7 @@ export const projects: Project[] = [
     technologies: ['React', 'Node.js', 'PostgreSQL'],
     url: 'https://frontend-client-taratra31s-projects.vercel.app/',
     year: '2026',
+    live: true,
   },
   {
     slug: 'visercard',
@@ -115,6 +119,7 @@ export const projects: Project[] = [
     technologies: ['Laravel', 'MySQL'],
     url: 'https://script.viserlab.com/visercard/',
     year: '2026',
+    live: true,
   },
 ]
 
