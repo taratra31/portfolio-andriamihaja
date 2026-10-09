@@ -64,7 +64,7 @@ export function RootLayout() {
 
       <ScrollToTop />
 
-      <header className={`fixed top-0 z-40 w-full border-b ${borderColor} bg-white/90 backdrop-blur-md transition-colors duration-300 dark:bg-gray-950/90`}>
+      <header className={`fixed top-0 z-40 w-full border-b ${borderColor} bg-white transition-colors duration-300 dark:bg-gray-950 md:bg-white/90 md:backdrop-blur-md md:dark:bg-gray-950/90`}>
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
           <div aria-hidden className="h-9" />
 
