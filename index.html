@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>Andriamihaja Taratra — Développeur Full Stack</title>
     <meta
@@ -34,6 +36,25 @@
       content="Portfolio d'Andriamihaja Taratra, développeur Full Stack à Antananarivo."
     />
     <meta name="twitter:image" content="%VITE_SITE_URL%/og.jpg" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Andriamihaja Taratra",
+        "jobTitle": "Développeur Full Stack",
+        "url": "%VITE_SITE_URL%/",
+        "image": "%VITE_SITE_URL%/og.jpg",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Antananarivo",
+          "addressCountry": "MG"
+        },
+        "sameAs": [
+          "https://github.com/taratra31",
+          "https://www.linkedin.com/in/taratra-andriam-333b4438a/"
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>
