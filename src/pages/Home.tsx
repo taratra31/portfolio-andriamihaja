@@ -7,6 +7,7 @@ import { Reveal } from '@/components/Reveal'
 import { Typewriter } from '@/components/Typewriter'
 import { TechMarquee } from '@/components/TechMarquee'
 import { useParallax } from '@/hooks/useParallax'
+import { useIsMobile } from '@/hooks/useIsMobile'
 import { useApp } from '@/context/useApp'
 import cvFile from '@/assets/AndriamihajaCV.pdf'
 import profilePic from '@/assets/Taratra2.png'
@@ -19,6 +20,17 @@ export function Home() {
   const photoRef = useParallax<HTMLDivElement>(0.06)
   const glowRef = useParallax<HTMLDivElement>(-0.04)
   const exploreRef = useRef<HTMLDivElement>(null)
+  const isMobile = useIsMobile()
+
+  const handleSectionClick = (to: string) => (event: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!isMobile) return
+    const id = to.replace('/', '')
+    const el = document.getElementById(id)
+    if (el) {
+      event.preventDefault()
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 
   const t = {
     fr: {
@@ -138,7 +150,7 @@ export function Home() {
             <Reveal delay={240}>
               <div className="mt-8 flex flex-wrap gap-3">
                 <Button asChild className="h-auto rounded-lg bg-emerald-600 px-6 py-5 text-sm font-medium text-white transition-colors hover:bg-emerald-700">
-                  <Link to="/projects">
+                  <Link to="/projects" onClick={handleSectionClick('/projects')}>
                     {t[lang].ctaPrimary}
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Link>
@@ -166,6 +178,7 @@ export function Home() {
               <Link
                 key={card.to}
                 to={card.to}
+                onClick={handleSectionClick(card.to)}
                 className="group rounded-xl border border-gray-200 bg-white p-5 transition-all duration-300 hover:-translate-y-1 hover:border-emerald-300 dark:border-gray-800 dark:bg-gray-900/40 dark:hover:border-emerald-700"
               >
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-emerald-50 dark:bg-emerald-900/20">

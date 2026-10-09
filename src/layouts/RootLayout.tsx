@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { Menu, Moon, Sun, X } from 'lucide-react'
 import { useApp } from '@/context/useApp'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
@@ -7,19 +7,35 @@ import { PageTransition, ScrollToTop } from '@/components/PageTransition'
 import { CookieBanner } from '@/components/CookieBanner'
 
 const NAV = [
-  { to: '/', fr: 'Accueil', en: 'Home' },
-  { to: '/experience', fr: 'Expérience', en: 'Experience' },
-  { to: '/projects', fr: 'Projets', en: 'Projects' },
-  { to: '/skills', fr: 'Compétences', en: 'Skills' },
-  { to: '/education', fr: 'Formation', en: 'Education' },
-  { to: '/contact', fr: 'Contact', en: 'Contact' },
+  { to: '/', fr: 'Accueil', en: 'Home', id: 'home' },
+  { to: '/experience', fr: 'Expérience', en: 'Experience', id: 'experience' },
+  { to: '/projects', fr: 'Projets', en: 'Projects', id: 'projects' },
+  { to: '/skills', fr: 'Compétences', en: 'Skills', id: 'skills' },
+  { to: '/education', fr: 'Formation', en: 'Education', id: 'education' },
+  { to: '/contact', fr: 'Contact', en: 'Contact', id: 'contact' },
 ] as const
 
 export function RootLayout() {
   const { lang, setLang, isDark, toggleTheme } = useApp()
   const [mobileOpen, setMobileOpen] = useState(false)
+  const navigate = useNavigate()
 
   useScrollReveal()
+
+  const goSection = (item: (typeof NAV)[number]) => {
+    setMobileOpen(false)
+    if (item.id === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+      return
+    }
+    const el = document.getElementById(item.id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    } else {
+      navigate('/')
+      window.setTimeout(() => document.getElementById(item.id)?.scrollIntoView({ behavior: 'smooth' }), 120)
+    }
+  }
 
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? 'hidden' : ''
@@ -98,19 +114,13 @@ export function RootLayout() {
             </div>
             <nav className="flex flex-col gap-4">
               {NAV.map(item => (
-                <NavLink
+                <button
                   key={item.to}
-                  to={item.to}
-                  end={item.to === '/'}
-                  onClick={() => setMobileOpen(false)}
-                  className={({ isActive }) =>
-                    `border-b py-1.5 text-left text-sm transition-colors ${borderColor} ${
-                      isActive ? accent : `${textSecondary} hover:text-gray-900 dark:hover:text-gray-100`
-                    }`
-                  }
+                  onClick={() => goSection(item)}
+                  className={`border-b py-1.5 text-left text-sm transition-colors ${borderColor} ${textSecondary} hover:text-gray-900 dark:hover:text-gray-100`}
                 >
                   {item[lang]}
-                </NavLink>
+                </button>
               ))}
             </nav>
             <div className="mt-auto flex items-center justify-between border-t border-gray-200 pt-6 dark:border-gray-800">

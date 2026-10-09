@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
 import { AppProvider } from './context/AppContext'
 import { RootLayout } from './layouts/RootLayout'
-import { Home } from './pages/Home'
+import { OnePage } from './pages/OnePage'
 import { Experience } from './pages/Experience'
 import { Projects } from './pages/Projects'
 import { ProjectDetail } from './pages/ProjectDetail'
@@ -15,7 +15,7 @@ export default function App() {
     <AppProvider>
       <Routes>
         <Route element={<RootLayout />}>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<OnePage />} />
           <Route path="/experience" element={<Experience />} />
           <Route path="/projects" element={<Projects />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
