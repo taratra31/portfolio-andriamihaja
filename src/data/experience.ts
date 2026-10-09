@@ -15,12 +15,76 @@ export type ExperienceItem = {
 export const experiences: ExperienceItem[] = [
   {
     title: {
+      fr: 'Développeur Stagiaire / Lead Tech',
+      en: 'Developer Intern / Tech Lead',
+    },
+    company: 'TechCloud',
+    period: 'Juillet 2026 - Présent',
+    periodEn: 'July 2026 - Present',
+    location: 'Antananarivo, Madagascar (sur site)',
+    locationEn: 'Antananarivo, Madagascar (on-site)',
+    type: { fr: 'Stage', en: 'Internship' },
+    summary: {
+      fr: "Développement full stack en stage avec une responsabilité technique (lead tech) au sein de l'équipe.",
+      en: 'Full stack development as an intern with a technical leadership role (tech lead) within the team.',
+    },
+    highlights: {
+      fr: [
+        'Développement de fonctionnalités back-end et front-end (API, interfaces, base de données).',
+        "Lead tech : coordination technique de l'équipe, revues de code et orientation de l'architecture.",
+        'Mise en place du déploiement et de la supervision des environnements.',
+        'Participation à la planification des sprints et aux réunions client.',
+      ],
+      en: [
+        'Development of back-end and front-end features (API, interfaces, database).',
+        'Tech lead: technical coordination of the team, code reviews and architecture guidance.',
+        'Set up deployment and environment monitoring.',
+        'Involvement in sprint planning and client meetings.',
+      ],
+    },
+    metrics: ['Full Stack', 'Tech Lead', 'Code Review', 'Deployment'],
+    technologies: ['React', 'TypeScript', 'Node.js', 'PostgreSQL', 'Docker', 'Git'],
+  },
+  {
+    title: {
+      fr: 'Chef de Projet & Co-fondateur',
+      en: 'Project Manager & Co-founder',
+    },
+    company: 'Koragroup',
+    period: 'Juin 2026 - Septembre 2026',
+    periodEn: 'June 2026 - September 2026',
+    location: 'Antananarivo, Madagascar',
+    locationEn: 'Antananarivo, Madagascar',
+    type: { fr: 'Co-fondation', en: 'Co-founding' },
+    summary: {
+      fr: "Co-fondation d'un projet : pilotage de l'équipe et coordination du développement de la solution, de la conception à la mise en production.",
+      en: 'Co-founding of a project: leading the team and coordinating the solution development, from design to production.',
+    },
+    highlights: {
+      fr: [
+        'Définition de la vision produit et de la roadmap.',
+        "Management de l'équipe technique et organisation des sprints.",
+        'Coordination entre les profils technique, business et client.',
+        'Suivi des livraisons et de la qualité du produit.',
+      ],
+      en: [
+        'Definition of the product vision and roadmap.',
+        'Technical team management and sprint organization.',
+        'Coordination between technical, business and client stakeholders.',
+        'Tracking of deliveries and product quality.',
+      ],
+    },
+    metrics: ['Vision produit', 'Team management', 'Roadmap', 'Sprints'],
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'Docker', 'Git'],
+  },
+  {
+    title: {
       fr: 'Stagiaire Développeur Full Stack',
       en: 'Full Stack Developer Intern',
     },
     company: "M'lay design",
-    period: 'Mars 2026 - Présent',
-    periodEn: 'March 2026 - Present',
+    period: 'Mars 2026 - Juin 2026',
+    periodEn: 'March 2026 - June 2026',
     location: 'Antananarivo, Madagascar (sur site)',
     locationEn: 'Antananarivo, Madagascar (on-site)',
     type: { fr: 'Stage', en: 'Internship' },
