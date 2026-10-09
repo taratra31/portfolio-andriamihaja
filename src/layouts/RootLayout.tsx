@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Link, NavLink, Outlet } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import { Menu, Moon, Sun, X } from 'lucide-react'
 import { useApp } from '@/context/useApp'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
@@ -56,11 +56,7 @@ export function RootLayout() {
 
       <header className={`fixed top-0 z-40 w-full border-b ${borderColor} bg-white/90 backdrop-blur-md transition-colors duration-300 dark:bg-gray-950/90`}>
         <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:px-8">
-          <Link to="/" aria-label="Accueil" className="group flex items-center">
-            <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-600 to-emerald-700 text-sm font-bold tracking-tight text-white shadow-sm transition-transform duration-300 group-hover:scale-105">
-              AT
-            </span>
-          </Link>
+          <div aria-hidden className="h-9" />
 
           <div className="hidden items-center gap-8 md:flex">
             {NAV.map(item => (
