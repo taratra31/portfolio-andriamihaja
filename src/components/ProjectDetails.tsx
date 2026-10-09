@@ -3,7 +3,7 @@ import {
   CheckCircle2,
   Globe,
   Layers,
-  Sparkles,
+  ListChecks,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -93,7 +93,7 @@ export function ProjectDetails({ project, lang, variant = 'page' }: ProjectDetai
 
             <div>
               <h2 className={`mb-4 flex items-center gap-2 text-lg font-semibold ${textPrimary}`}>
-                <Sparkles className={`h-5 w-5 ${accent}`} />
+                <ListChecks className={`h-5 w-5 ${accent}`} />
                 {t[lang].highlights}
               </h2>
               <ul className="space-y-3">

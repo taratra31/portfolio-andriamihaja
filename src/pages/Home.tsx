@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, ChevronDown, Download, FolderCode, Layers, Sparkles } from 'lucide-react'
+import { ArrowRight, ChevronDown, Download, FolderCode, Layers, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CountUp } from '@/components/CountUp'
 import { Reveal } from '@/components/Reveal'
@@ -87,7 +87,7 @@ export function Home() {
   const textSecondary = 'text-gray-600 dark:text-gray-300'
   const textTertiary = 'text-gray-500 dark:text-gray-400'
   const accent = 'text-emerald-600 dark:text-emerald-400'
-  const cardIcons = [FolderCode, Layers, Sparkles]
+  const cardIcons = [FolderCode, Layers, Send]
 
   return (
     <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden px-4 pt-24 pb-24 transition-colors duration-300 sm:px-6 lg:px-8">
@@ -168,7 +168,7 @@ export function Home() {
                   asChild
                   className="group h-auto rounded-lg border-gray-300 px-6 py-5 text-sm font-medium text-gray-900 transition-colors hover:border-gray-400 hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:border-gray-600 dark:hover:bg-gray-900"
                 >
-                  <a href={cvFile} target="_blank" rel="noreferrer">
+                  <a href={cvFile} download="Andriamihaja_Taratra_CV.pdf">
                     <Download className="mr-2 h-4 w-4 transition-transform group-hover:translate-y-0.5" />
                     {t[lang].ctaSecondary}
                   </a>
