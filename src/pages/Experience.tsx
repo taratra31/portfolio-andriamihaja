@@ -3,32 +3,16 @@ import {
   Building,
   Calendar,
   Code2,
-  Container,
   Cpu,
-  Database,
   Globe,
-  Layers,
-  Smartphone,
   TrendingUp,
-  Zap,
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { PageHeader } from '@/components/PageHeader'
+import { TechIcon } from '@/components/TechIcon'
+import { hasTechIcon } from '@/lib/tech-icons'
 import { useApp } from '@/context/useApp'
 import { experiences } from '@/data/experience'
-
-const technologyIcons: Record<string, React.ReactNode> = {
-  React: <Code2 className="h-3.5 w-3.5" />,
-  FastAPI: <Zap className="h-3.5 w-3.5" />,
-  Python: <Code2 className="h-3.5 w-3.5" />,
-  PostgreSQL: <Database className="h-3.5 w-3.5" />,
-  Docker: <Container className="h-3.5 w-3.5" />,
-  'Tailwind CSS': <Layers className="h-3.5 w-3.5" />,
-  Ionic: <Smartphone className="h-3.5 w-3.5" />,
-  Supabase: <Zap className="h-3.5 w-3.5" />,
-  Angular: <Code2 className="h-3.5 w-3.5" />,
-  TypeScript: <Code2 className="h-3.5 w-3.5" />,
-}
 
 export function Experience() {
   const { lang } = useApp()
@@ -132,7 +116,9 @@ export function Experience() {
                         key={tech}
                         className={`flex items-center gap-1.5 rounded-md border ${borderClass} ${subtleBg} px-2.5 py-1.5 text-xs font-medium cursor-default`}
                       >
-                        <span className={accent}>{technologyIcons[tech] || <Code2 className="h-3.5 w-3.5" />}</span>
+                        <span className={hasTechIcon(tech) ? '' : accent}>
+                          {hasTechIcon(tech) ? <TechIcon name={tech} className="h-3.5 w-3.5" /> : <Code2 className="h-3.5 w-3.5" />}
+                        </span>
                         <span className={textSecondary}>{tech}</span>
                       </Badge>
                     ))}
