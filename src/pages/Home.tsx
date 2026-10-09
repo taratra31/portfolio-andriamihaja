@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowRight, Download, FolderCode, Layers, Sparkles } from 'lucide-react'
+import { ArrowRight, ChevronDown, Download, FolderCode, Layers, Sparkles } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CountUp } from '@/components/CountUp'
 import { Reveal } from '@/components/Reveal'
@@ -18,6 +18,7 @@ export function Home() {
   const [imageLoaded, setImageLoaded] = useState(false)
   const photoRef = useParallax<HTMLDivElement>(0.06)
   const glowRef = useParallax<HTMLDivElement>(-0.04)
+  const exploreRef = useRef<HTMLDivElement>(null)
 
   const t = {
     fr: {
@@ -158,7 +159,7 @@ export function Home() {
         </div>
 
         {/* Cartes d'exploration */}
-        <div className="mt-20 grid gap-4 sm:grid-cols-3 stagger-grid">
+        <div ref={exploreRef} id="explore" className="mt-20 grid gap-4 sm:grid-cols-3 stagger-grid">
           {t[lang].cards.map((card, index) => {
             const Icon = cardIcons[index]
             return (
@@ -180,6 +181,14 @@ export function Home() {
       </div>
 
       <TechMarquee />
+
+      <button
+        onClick={() => exploreRef.current?.scrollIntoView({ behavior: 'smooth' })}
+        aria-label={t[lang].scroll}
+        className="absolute bottom-5 left-1/2 z-10 -translate-x-1/2 rounded-full p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-emerald-600 dark:text-gray-500 dark:hover:bg-gray-800/60 dark:hover:text-emerald-400"
+      >
+        <ChevronDown className="h-7 w-7 animate-bounce" />
+      </button>
     </div>
   )
 }

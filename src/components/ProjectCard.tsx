@@ -71,14 +71,14 @@ export function ProjectCard({ project, lang, onOpen }: ProjectCardProps) {
 
   const content = (
     <>
-      <div className="relative aspect-[16/10] overflow-hidden bg-gray-100 dark:bg-gray-900">
+      <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-900 sm:aspect-[16/10]">
         <img
           src={project.image}
           alt={`${project.name} — ${lang === 'fr' ? 'aperçu' : 'preview'}`}
           loading="lazy"
           className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
-        {project.live && <LivePreview src={project.url} title={project.name} />}
+        {project.live && <LivePreview src={project.url} title={project.name} interactive="mobile" />}
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-950/60 via-transparent to-transparent" />
         <span className={`absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-md border border-emerald-200 bg-white/90 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide ${accent} dark:border-emerald-800 dark:bg-gray-950/90`}>
           <span className="relative flex h-2 w-2">

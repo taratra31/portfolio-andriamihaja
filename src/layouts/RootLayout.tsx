@@ -4,6 +4,7 @@ import { Menu, Moon, Sun, X } from 'lucide-react'
 import { useApp } from '@/context/useApp'
 import { useScrollReveal } from '@/hooks/useScrollReveal'
 import { PageTransition, ScrollToTop } from '@/components/PageTransition'
+import { CookieBanner } from '@/components/CookieBanner'
 
 const NAV = [
   { to: '/', fr: 'Accueil', en: 'Home' },
@@ -131,6 +132,8 @@ export function RootLayout() {
           <Outlet />
         </PageTransition>
       </main>
+
+      <CookieBanner />
     </div>
   )
 }

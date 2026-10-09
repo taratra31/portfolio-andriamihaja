@@ -3,11 +3,14 @@ import { useState } from 'react'
 type LivePreviewProps = {
   src: string
   title: string
-  interactive?: boolean
+  interactive?: boolean | 'mobile'
 }
 
 export function LivePreview({ src, title, interactive = false }: LivePreviewProps) {
   const [loaded, setLoaded] = useState(false)
+
+  const pointerClass =
+    interactive === true ? '' : interactive === 'mobile' ? 'pointer-events-auto md:pointer-events-none' : 'pointer-events-none'
 
   return (
     <>
@@ -20,9 +23,8 @@ export function LivePreview({ src, title, interactive = false }: LivePreviewProp
         src={src}
         title={title}
         loading="lazy"
-        scrolling="no"
         onLoad={() => setLoaded(true)}
-        className={`absolute inset-0 z-10 h-full w-full border-0 bg-white ${interactive ? '' : 'pointer-events-none'}`}
+        className={`absolute inset-0 z-10 h-full w-full border-0 bg-white ${pointerClass}`}
         style={loaded ? undefined : { visibility: 'hidden' }}
       />
     </>
