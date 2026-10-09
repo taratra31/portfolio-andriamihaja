@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { Reveal } from '@/components/Reveal'
 import { TechIcon } from '@/components/TechIcon'
+import { LivePreview } from '@/components/LivePreview'
 import { hasTechIcon } from '@/lib/tech-icons'
 import type { Project } from '@/data/projects'
 import type { Lang } from '@/context/app-context'
@@ -69,12 +70,15 @@ export function ProjectDetails({ project, lang, variant = 'page' }: ProjectDetai
       )}
 
       {withReveal(
-        <div className={`overflow-hidden rounded-2xl border ${borderClass} bg-gray-100 dark:bg-gray-900`}>
+        <div className={`relative overflow-hidden rounded-2xl border ${borderClass} bg-gray-100 dark:bg-gray-900`}>
           <img
             src={project.image}
             alt={`${project.name} — ${lang === 'fr' ? 'aperçu' : 'preview'}`}
-            className="h-full w-full object-cover object-top"
+            className="absolute inset-0 h-full w-full object-cover object-top"
           />
+          <div className="relative aspect-[16/10] w-full">
+            <LivePreview src={project.url} title={project.name} interactive />
+          </div>
         </div>,
         80,
       )}

@@ -16,6 +16,7 @@ import {
 } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { TechIcon } from '@/components/TechIcon'
+import { LivePreview } from '@/components/LivePreview'
 import { hasTechIcon } from '@/lib/tech-icons'
 import type { Project } from '@/data/projects'
 import type { Lang } from '@/context/app-context'
@@ -75,12 +76,16 @@ export function ProjectCard({ project, lang, onOpen }: ProjectCardProps) {
           src={project.image}
           alt={`${project.name} — ${lang === 'fr' ? 'aperçu' : 'preview'}`}
           loading="lazy"
-          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+          className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-gray-950/60 via-transparent to-transparent" />
+        <LivePreview src={project.url} title={project.name} />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-gray-950/60 via-transparent to-transparent" />
         <span className={`absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-md border border-emerald-200 bg-white/90 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide ${accent} dark:border-emerald-800 dark:bg-gray-950/90`}>
-          <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-          {lang === 'fr' ? 'Voir' : 'View'}
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-60" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+          </span>
+          {lang === 'fr' ? 'Live' : 'Live'}
         </span>
       </div>
 
