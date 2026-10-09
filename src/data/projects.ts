@@ -42,7 +42,7 @@ export const projects: Project[] = [
     features: ['Géolocalisation', 'Wallet & Mobile Money', 'Application Android'],
     technologies: ['React', 'Node.js', 'PostgreSQL'],
     url: 'https://madazone.duckdns.org/',
-    year: '2025',
+    year: '2026',
   },
   {
     slug: 'madastock',
@@ -66,7 +66,7 @@ export const projects: Project[] = [
     features: ['Ventes & stock', 'Facturation', 'Dashboard temps réel'],
     technologies: ['React', 'Node.js', 'PostgreSQL'],
     url: 'https://madastock.onrender.com/',
-    year: '2025',
+    year: '2026',
   },
   {
     slug: 'madacolis',
@@ -90,7 +90,7 @@ export const projects: Project[] = [
     features: ['Suivi de colis', 'Madagascar ↔ France', 'Mobile + Web'],
     technologies: ['React', 'Node.js', 'PostgreSQL'],
     url: 'https://frontend-client-taratra31s-projects.vercel.app/',
-    year: '2025',
+    year: '2026',
   },
   {
     slug: 'visercard',
@@ -114,7 +114,7 @@ export const projects: Project[] = [
     features: ['Cartes virtuelles', 'Paiements sécurisés', 'Wallet en ligne'],
     technologies: ['Laravel', 'MySQL'],
     url: 'https://script.viserlab.com/visercard/',
-    year: '2025',
+    year: '2026',
   },
 ]
 
